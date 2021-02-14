@@ -44,6 +44,7 @@
             :srcset="`${$icon(24)} 1x, ${$icon(48)} 2x`"
             width="24"
             height="24"
+            :alt="$config.APP_NAME"
             onerror="javascript:this.style.display = 'none'"
           />
           <v-toolbar-title class="ml-1 d-none d-sm-flex text--primary">
