@@ -1,0 +1,10 @@
+<template>
+  <v-container>
+    <v-row>
+      <v-col>
+        <h1>Events</h1>
+        <div></div>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>

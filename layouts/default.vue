@@ -1,11 +1,11 @@
 <template>
-  <v-app dark>
+  <v-app clipped-left>
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
+      :clipped="$vuetify.breakpoint.lgAndUp"
       app
+      class="hidden-print-only"
+      disable-resize-watcher
     >
       <v-list>
         <v-list-item
@@ -24,68 +24,117 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+    <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" fixed app>
+      <v-app-bar-nav-icon aria-label="menu" @click.stop="drawer = !drawer">
+        <v-progress-circular
+          v-if="loading"
+          indeterminate
+          size="18"
+          width="2"
+        ></v-progress-circular>
+      </v-app-bar-nav-icon>
+      <v-container fluid class="d-flex pa-0 align-center">
+        <nuxt-link
+          to="/"
+          class="d-flex align-center text-decoration-none"
+          aria-label="Home"
+        >
+          <v-img
+            :src="`${$icon(24)}`"
+            :srcset="`${$icon(24)} 1x, ${$icon(48)} 2x`"
+            width="24"
+            height="24"
+            onerror="javascript:this.style.display = 'none'"
+          />
+          <v-toolbar-title class="ml-1 d-none d-sm-flex text--primary">
+            {{ $config.APP_NAME }}</v-toolbar-title
+          >
+        </nuxt-link>
+      </v-container>
+
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <v-tabs class="hidden-sm-and-down" optional right>
+        <v-tabs-slider></v-tabs-slider>
+        <v-tab v-for="{ title, to } in items" :key="title" :to="to" text>
+          {{ title }}
+        </v-tab>
+      </v-tabs>
     </v-app-bar>
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt style="min-height: 100vh"></nuxt>
+      <v-footer>
+        <v-container>
+          <v-row no-gutters>
+            <v-col cols="auto">
+              <v-card flat color="transparent">
+                <v-card-text>
+                  <span>{{ $config.VERSION }}</span>
+                  <span v-if="$config.COMMIT">{{
+                    shortHash($config.COMMIT)
+                  }}</span>
+                </v-card-text>
+              </v-card>
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col v-if="$config.DATE_GENERATED" cols="auto">
+              <LastModified></LastModified>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-footer>
     </v-main>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
 <script>
+import {
+  mdiHome,
+  mdiInformation,
+  mdiWalletMembership,
+  mdiCalendarBlank,
+} from '@mdi/js'
+// import UserMenu from '@/components/UserMenu.vue'
+import LastModified from '@/components/LastModified'
 export default {
+  components: {
+    LastModified,
+  },
   data() {
     return {
-      clipped: false,
       drawer: false,
-      fixed: false,
+      loading: true,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: mdiHome,
+          title: 'Home',
           to: '/',
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          icon: mdiInformation,
+          title: 'About',
+          to: '/about',
+        },
+        {
+          icon: mdiWalletMembership,
+          title: 'Membership',
+          to: '/membership',
+        },
+        {
+          icon: mdiCalendarBlank,
+          title: 'Events',
+          to: '/events',
         },
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js',
     }
+  },
+  mounted() {
+    // eslint-disable-next-line nuxt/no-env-in-hooks
+    if (process.client) {
+      this.loading = false
+    }
+  },
+  methods: {
+    shortHash: (value) => (value ? value.substring(0, 7) : null),
   },
 }
 </script>

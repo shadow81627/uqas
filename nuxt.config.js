@@ -1,80 +1,117 @@
-import colors from 'vuetify/es5/util/colors'
+import pkg from './package'
+
+const HOST = process.env.HOST || '0.0.0.0'
+const PORT = process.env.PORT || '3000'
+const BASE_URL = (
+  process.env.BASE_URL ||
+  process.env.DEPLOY_URL ||
+  process.env.URL ||
+  process.env.VERCEL_URL ||
+  `http${PORT === 433 ? 's' : ''}://${HOST}${
+    [433, 80].includes(PORT) ? '' : `:${PORT}`
+  }`
+).replace(/(^http[s]?)?(?::\/\/)?(.*)/, function (_, protocol, domain) {
+  return `${protocol || 'http'}://${domain}`
+})
+
+const env = {
+  HOST,
+  PORT,
+  BASE_URL,
+  VERSION: pkg.version,
+  COMMIT:
+    process.env.npm_package_gitHead || process.env.VERCEL_GITHUB_COMMIT_SHA,
+  DATE_GENERATED: new Date().toISOString(),
+  APP_NAME: process.env.APP_NAME || `UQ Archaeological Society`,
+}
 
 export default {
-  // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
+  publicRuntimeConfig: {
+    ...env,
+  },
+
+  generate: {
+    // use '404.html' instead default '200.html'
+    fallback: true,
+  },
+
   head: {
-    titleTemplate: '%s - uqas',
-    title: 'uqas',
+    titleTemplate: '%s - UQ Archaeological Society',
+    title: 'UQ Archaeological Society',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { once: true, charset: 'utf-8' },
+      {
+        once: true,
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1',
+      },
+      {
+        once: true,
+        hid: 'description',
+        name: 'description',
+        content:
+          'A supportive community for all students enrolled or interested in archaeology at UQ. Hands-on experimental workshops, mentoring and support, involvement with industry leaders, field schools, news and opportunities, and casual networking events.',
+      },
+      {
+        once: true,
+        name: 'version',
+        hid: 'version',
+        content: env.VERSION,
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
-    // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
-  ],
+  buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
-    // https://go.nuxtjs.dev/content
-    '@nuxt/content',
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxt/content'],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
       lang: 'en',
+      name: env.APP_NAME,
+      short_name: env.APP_NAME,
     },
-  },
-
-  // Content module configuration: https://go.nuxtjs.dev/config-content
-  content: {},
-
-  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
-  vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: true,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
+    meta: {
+      name: env.APP_NAME,
+      ogHost: env.BASE_URL,
+      theme_color: '#ffffff',
+      ogImage: {
+        path: '/cover.jpg',
+        width: 1200,
+        height: 600,
+        type: 'image/jpg',
       },
     },
+    icon: {
+      sizes: [24, 48, 64, 120, 144, 152, 192, 384, 512],
+    },
   },
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
+  content: {},
+
+  sitemap: {
+    hostname: env.BASE_URL,
+  },
+
+  vuetify: {
+    customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
+    defaultAssets: false,
+    icons: {
+      iconfont: 'mdiSvg',
+    },
+  },
+
   build: {},
 }
