@@ -93,12 +93,7 @@ import {
   mdiWalletMembership,
   mdiCalendarBlank,
 } from '@mdi/js'
-// import UserMenu from '@/components/UserMenu.vue'
-import LastModified from '@/components/LastModified'
 export default {
-  components: {
-    LastModified,
-  },
   data() {
     return {
       drawer: false,

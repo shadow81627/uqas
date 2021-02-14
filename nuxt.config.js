@@ -23,6 +23,8 @@ const env = {
     process.env.npm_package_gitHead || process.env.VERCEL_GITHUB_COMMIT_SHA,
   DATE_GENERATED: new Date().toISOString(),
   APP_NAME: process.env.APP_NAME || `UQ Archaeological Society`,
+  MAPBOX_TOKEN:
+    'pk.eyJ1IjoiZGFtaWVucm9iaW5zb24iLCJhIjoiY2tsNHFjb2Y3MTQ4dDJ3cWo0d2pjdmNjbiJ9.k--b3fNDkdUPOmp3cICIFA',
 }
 
 export default {
@@ -72,7 +74,13 @@ export default {
 
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
 
-  modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxt/content'],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa',
+    '@nuxt/content',
+    '@nuxt/image',
+    '@nuxtjs/sitemap',
+  ],
 
   axios: {},
 
