@@ -50,7 +50,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <MapBox :lat="-27.50121" :lng="152.980043"></MapBox>
+        <MapBox :lat="-27.497016" :lng="153.013395"></MapBox>
       </v-col>
     </v-row>
   </v-container>
