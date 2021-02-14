@@ -2,6 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
+        <nuxt-picture src="/cover.jpg" placeholder width="1200" height="600" />
         <h1>UQ Archaeological Society</h1>
         <div>
           <p>
