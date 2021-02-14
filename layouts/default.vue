@@ -39,7 +39,7 @@
           class="d-flex align-center text-decoration-none"
           aria-label="Home"
         >
-          <v-img
+          <img
             :src="`${$icon(24)}`"
             :srcset="`${$icon(24)} 1x, ${$icon(48)} 2x`"
             width="24"
