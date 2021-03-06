@@ -2,7 +2,7 @@
   <v-card id="message">
     <h2>404</h2>
     <h1>Page not found</h1>
-    <v-btn to="/index" color="primary" block large>Home</v-btn>
+    <v-btn to="/" color="primary" block large>Home</v-btn>
   </v-card>
 </template>
 
