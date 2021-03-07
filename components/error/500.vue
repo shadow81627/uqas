@@ -12,7 +12,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-btn to="/index" exact large block color="primary">Home</v-btn>
+        <v-btn to="/" exact large block color="primary">Home</v-btn>
       </v-col>
     </v-row>
   </v-card>
