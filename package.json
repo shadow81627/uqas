@@ -35,7 +35,7 @@
   "devDependencies": {
     "@commitlint/cli": "12.1.1",
     "@commitlint/config-conventional": "12.1.1",
-    "@lhci/cli": "0.7.0",
+    "@lhci/cli": "0.7.1",
     "@mdi/js": "5.9.55",
     "@nuxt/image": "0.4.4",
     "@nuxt/types": "2.15.4",
