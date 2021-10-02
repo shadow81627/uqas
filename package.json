@@ -36,7 +36,7 @@
     "@commitlint/cli": "13.2.0",
     "@commitlint/config-conventional": "13.2.0",
     "@lhci/cli": "0.7.2",
-    "@mdi/js": "6.1.95",
+    "@mdi/js": "6.2.95",
     "@nuxt/image": "0.6.0",
     "@nuxt/types": "2.15.8",
     "@nuxt/typescript-build": "2.1.0",
