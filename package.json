@@ -29,7 +29,7 @@
     "@nuxtjs/sitemap": "2.4.0",
     "core-js": "3.26.1",
     "dayjs": "1.11.6",
-    "mapbox-gl": "2.10.0",
+    "mapbox-gl": "2.11.0",
     "nuxt": "2.15.8"
   },
   "devDependencies": {
